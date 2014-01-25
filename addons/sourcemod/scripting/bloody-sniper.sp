@@ -65,10 +65,16 @@ public OnMapStart() {
 }
 
 public OnClientPutInServer(iClient) {
+	if (!GetConVarBool(g_hPluginEnabled))
+		return;
+
 	SDKHook(iClient, SDKHook_OnTakeDamage, OnTakeDamage);
 }
 
 public Action:OnTakeDamage(iClient, &iAttacker, &iInflictor, &Float:fDamage, &iDamageType, &iWeapon, Float:fDamageForce[3], Float:fDamagePosition[3]) {
+	if (!GetConVarBool(g_hPluginEnabled))
+		return Plugin_Continue;
+
 	if (!IsValidClient(iClient, true)) 
 		return Plugin_Continue;
 
